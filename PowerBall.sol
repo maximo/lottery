@@ -100,8 +100,6 @@ contract Lottery
             {
                 throw;
             }
-            // decrement pot [reference: #2 reported by zbobbert]
-            totalPot -= _earnings;
         }
 
         // pay admin administrative fee and terminate lottery contract [reference: #2 reported by zbobbert]
@@ -125,10 +123,11 @@ contract Lottery
                 }
                 // remove player from winners list since they have been paid.
                 delete winners[i];
+                // reduce the size of the pot correspondingly.
+		        totalPot -= _earnings;
+		        break;
             }
         }
-
-        totalPot -= _earnings;
     }
     
     function Play(uint _whiteballs, uint _powerball) InPlay 
